@@ -1,0 +1,189 @@
+{
+  "opportunity_id": "sha256:4ba6417b3",
+  "question": "tem um edital CGU 2026 sobre Cross-Data? Vale a pena investigar?",
+  "cycle_n": 1,
+  "created_at": "2026-08-31T06:49:03.942442+00:00",
+  "updated_at": "2026-08-31T06:49:03.942662+00:00",
+  "evidence": [
+    {
+      "evidence_id": "ev_sha256:4ba6417b3_c0_001",
+      "kind": "web_url",
+      "source": "CGU",
+      "uri": "https://www.gov.br/cgu/pt-br/...",
+      "record_id": null,
+      "observed_at": "2026-08-31T06:48:20.258441+00:00",
+      "metadata_only": true,
+      "provenance_note": "Edital 2o Concurso Reuso Dados 2026"
+    },
+    {
+      "evidence_id": "ev_sha256:4ba6417b3_c0_002",
+      "kind": "local_doc",
+      "source": "hermes/cgu_discovery_audit.md",
+      "uri": "/home/vinicius/.hermes/cgu_discovery_audit.md",
+      "record_id": null,
+      "observed_at": "2026-08-31T06:48:20.258459+00:00",
+      "metadata_only": true,
+      "provenance_note": "Auditoria previa do Hermes"
+    },
+    {
+      "evidence_id": "ev_sha256:4ba6417b3_c0_003",
+      "kind": "github_repo",
+      "source": "viniburilux/cgu-reuso-2026",
+      "uri": "https://github.com/viniburilux/cgu-reuso-2026",
+      "record_id": null,
+      "observed_at": "2026-08-31T06:48:20.258463+00:00",
+      "metadata_only": true,
+      "provenance_note": "Materializacao previa do Hermes (4 iniciativas PROVEN)"
+    },
+    {
+      "evidence_id": "ev_sha256:4ba6417b3_c1_004",
+      "kind": "web_url",
+      "source": "CGU",
+      "uri": "https://www.gov.br/cgu/pt-br/concurso-2026/edital.pdf",
+      "record_id": null,
+      "observed_at": "2026-08-31T06:49:03.942547+00:00",
+      "metadata_only": true,
+      "provenance_note": "PDF do edital extraido"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "cl_sha256:4ba6417b3_c0_001",
+      "statement": "CGU 2026 tem 2o Concurso Reuso de Dados ja aberto",
+      "status": "observed",
+      "evidence_ids": [
+        "ev_sha256:4ba6417b3_c0_001"
+      ],
+      "gap_ids": [],
+      "note": "Confirmado por CGU + repo previo"
+    },
+    {
+      "claim_id": "cl_sha256:4ba6417b3_c0_002",
+      "statement": "4 iniciativas cross-data ja foram materializadas (PNCP+FIRMS+CNES+IBGE)",
+      "status": "observed",
+      "evidence_ids": [
+        "ev_sha256:4ba6417b3_c0_002",
+        "ev_sha256:4ba6417b3_c0_003"
+      ],
+      "gap_ids": [],
+      "note": "Confirmado por auditoria previa"
+    },
+    {
+      "claim_id": "cl_sha256:4ba6417b3_c0_003",
+      "statement": "Cross-Data Validator tem 80% do codigo pronto",
+      "status": "inferred",
+      "evidence_ids": [
+        "ev_sha256:4ba6417b3_c0_002",
+        "ev_sha256:4ba6417b3_c0_003"
+      ],
+      "gap_ids": [],
+      "note": "Inferencia por sobreposicao de evidencia"
+    },
+    {
+      "claim_id": "cl_sha256:4ba6417b3_c0_004",
+      "statement": "Submissao aproveitaria estado atual do agente",
+      "status": "hypothesis",
+      "evidence_ids": [],
+      "gap_ids": [
+        "gp_001"
+      ],
+      "note": "Hipotese, precisa validacao"
+    },
+    {
+      "claim_id": "cl_sha256:4ba6417b3_c1_005",
+      "statement": "CGU 2026 prazo: 60 dias a partir de 15/09/2026",
+      "status": "observed",
+      "evidence_ids": [
+        "ev_sha256:4ba6417b3_c1_004"
+      ],
+      "gap_ids": [],
+      "note": null
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "gp_sha256:4ba6417b3_c0_001",
+      "statement": "Prazo exato do edital 2026",
+      "severity": "critical",
+      "required_evidence": [
+        "CGU_EDITAL_URL"
+      ],
+      "status": "open"
+    },
+    {
+      "gap_id": "gp_sha256:4ba6417b3_c0_002",
+      "statement": "Criterios de pontuacao detalhados",
+      "severity": "material",
+      "required_evidence": [
+        "CGU_EDITAL_PDF"
+      ],
+      "status": "open"
+    },
+    {
+      "gap_id": "gp_sha256:4ba6417b3_c0_003",
+      "statement": "Disponibilidade de GPU/Earth Engine para GhostWorks",
+      "severity": "minor",
+      "required_evidence": [],
+      "status": "open"
+    },
+    {
+      "gap_id": "gp_sha256:4ba6417b3_c1_004",
+      "statement": "Necessario revisar categorias de submissoes aceitas",
+      "severity": "material",
+      "required_evidence": [
+        "EDITAL_CATEGORIAS"
+      ],
+      "status": "open"
+    }
+  ],
+  "facts_added": [],
+  "inferences": [],
+  "hypotheses_remaining": [],
+  "paths_discarded": [
+    {
+      "path": "investigar solo os editais PNCP sem cross-data",
+      "reason": "A pergunta e sobre CROSS-data, escopo exclue PNCP sozinho",
+      "discarded_at": "2026-08-31T06:48:20.258506+00:00"
+    },
+    {
+      "path": "construir nova API do zero",
+      "reason": "TraceFoundry+pncp-data-pipeline ja existem, reusar",
+      "discarded_at": "2026-08-31T06:48:20.258508+00:00"
+    },
+    {
+      "path": "tentar GPU/Earth Engine local",
+      "reason": "Sem sudo, bloqueado por libs nativas; hipotese rejeitada por agora",
+      "discarded_at": "2026-08-31T06:48:20.258509+00:00"
+    },
+    {
+      "path": "gap gp_sha256:4ba6417b3_c0_001: prazo edital 2026",
+      "reason": "Resolvido por evidencia do edital (60d a partir de 15/09)",
+      "discarded_at": "2026-08-31T06:49:03.942562+00:00"
+    }
+  ],
+  "next_questions": [
+    {
+      "q": "Consultar edital CGU 2026 e extrair prazos+criterios",
+      "reason": "Resolver gap critico de prazo",
+      "query_plan": "web_extract(URL) -> parse -> save artifacts"
+    },
+    {
+      "q": "Cruzar 4 iniciativas PROVEN com criterios do edital",
+      "reason": "Mapear match para pontuacao",
+      "query_plan": "read_file(cgu_discovery_audit.md) + aplicar matriz"
+    },
+    {
+      "q": "Cruzar prazo (60d) com escopo do edital",
+      "reason": "Verificar se 60d e viavel",
+      "query_plan": "web_extract + comparacao"
+    }
+  ],
+  "decision": "narrow",
+  "representation_change": "substituir consulta morta por nova baseada em termos observados",
+  "applied_operators": [
+    "radiografar",
+    "densidade",
+    "reformular"
+  ],
+  "applied_operations": []
+}
