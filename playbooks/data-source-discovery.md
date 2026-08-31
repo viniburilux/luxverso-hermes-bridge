@@ -1,7 +1,7 @@
 # Playbook: Data Source Discovery
 
 **Evidência:** Aplicado 1 vez com sucesso:
-1. **CGU 2026** (2026-08-31): 4 fontes descobertas em 1 turno — PNCP (API oficial), NASA FIRMS (CSV público), CNES (OpenDataSUS), IBGE (GeoJSON). Cruzadas com PNCP resultaram em 4 iniciativas PROVEN.
+1. **Concurso 2026** (2026-XX-XX): 4 fontes descobertas em 1 turno — CONTRATOS (API oficial), NASA FIRMS (CSV público), CNES (OpenDataSUS), IBGE (GeoJSON). Cruzadas com CONTRATOS resultaram em 4 iniciativas PROVEN.
 
 **Quando usar:** "Preciso de dados sobre [X]", "qual a melhor fonte para [Y]", "tem dado público sobre [Z]?".
 
@@ -18,7 +18,7 @@ Especificar:
 
 ### FASE 2 — VERIFICAR FONTES CONHECIDAS
 **Fontes BR já catalogadas (Lux-Radar + Lux-Lab):**
-- **PNCP** — `https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao` — contratações públicas federais
+- **CONTRATOS** — `https://contratos.gov.br/api/consulta/v1/contratacoes/publicacao` — contratações públicas federais
 - **NASA FIRMS** — `https://firms.modaps.eosdis.nasa.gov/data/active_fire/...csv` — focos de queimada ativos (24h)
 - **OpenDataSUS (CNES)** — `https://apidadosabertos.saude.gov.br/cnes/estabelecimentos` — estabelecimentos de saúde
 - **IBGE Localidades** — `https://servicodados.ibge.gov.br/api/v1/localidades` — municípios, UFs
@@ -56,7 +56,7 @@ curl -fsS "<url>?param=value" | head -c 200
 
 ### FASE 5 — CRUZAR COM BASES PRÓPRIAS
 - Com IBGE: padronizar codigo_ibge
-- Com PNCP: cruzar codigo_ibge + data
+- Com CONTRATOS: cruzar codigo_ibge + data
 - Com FIRMS: cruzar lat/lon + data (Haversine para distância)
 - Com CNES: cruzar codigo_ibge (mesma chave territorial)
 
@@ -97,5 +97,5 @@ Uma fonte está "OK" quando:
 
 **Status:** proven
 **Confidence:** 0.85
-**Last used:** 2026-08-31 (CGU 4 fontes)
+**Last used:** 2026-XX-XX (CGOV 4 fontes)
 **Reused count:** 1

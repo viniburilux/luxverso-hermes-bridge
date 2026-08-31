@@ -2,7 +2,7 @@
 
 **Evidência:** Aplicado em 2 oportunidades reais:
 1. **Superbet** (2026-08): exp1-7 em `~/.hermes/lab/` — sucesso completo, gerou 7 scripts + 1.5MB de dados estruturados
-2. **CGU 2026** (2026-08-31): 4 etapas (PNCP → FIRMS → CNES → IBJE) — 4 iniciativas PROVEN
+2. **Concurso 2026** (2026-XX-XX): 4 etapas (CONTRATOS → FIRMS → CNES → IBJE) — 4 iniciativas PROVEN
 
 **Método:** Sequência de 7 fases, cada fase produz artefato observável.
 
@@ -90,7 +90,7 @@ Vini disser qualquer coisa como:
      "id": "h1",
      "question": "Há editais emergenciais em municípios com queimadas ativas?",
      "hypothesis": "Sim, > 5 em 30 dias",
-     "test_query": "cross-data PNCP x FIRMS",
+     "test_query": "cross-data CONTRATOS x FIRMS",
      "evidence_threshold": 5,
      "status": "open"
    }
@@ -150,9 +150,9 @@ Vini disser qualquer coisa como:
 
 ## Lições aprendidas (de casos reais)
 
-1. **Catu BA** (Cgu 2026): 1 edital Dispensa + 1 foco FIRMS a 3.99km — achado com 1 cruzamento geográfico
-2. **Marinha 28/08** (Cgu 2026): 6 dispensas no mesmo dia — achado com agrupamento temporal
-3. **CE 62%** (Cgu 2026): anomalia estadual — achado com agregação por UF
+1. **Catu BA** (Concurso 2026): 1 edital Dispensa + 1 foco FIRMS a 3.99km — achado com 1 cruzamento geográfico
+2. **Marinha 28/08** (Concurso 2026): 6 dispensas no mesmo dia — achado com agrupamento temporal
+3. **CE 62%** (Concurso 2026): anomalia estadual — achado com agregação por UF
 
 Todos vieram do MESMO playbook (Fases 1-7).
 
@@ -185,5 +185,5 @@ Todos vieram do MESMO playbook (Fases 1-7).
 
 **Status:** proven
 **Confidence:** 0.85
-**Last used:** 2026-08-31 (CGU)
+**Last used:** 2026-XX-XX (CGOV)
 **Reused count:** 2

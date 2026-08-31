@@ -1,7 +1,7 @@
 {
   "tracefoundry": {
     "structure": {
-      "root": "/home/vinicius/luxverso-archive/TraceFoundry/",
+      "root": "/app/luxverso-archive/TraceFoundry/",
       "dirs_3_levels": {
         "src": ["src/oi_discovery/", "src/oi_discovery/adapters/"],
         "schemas": ["schemas/"],
@@ -110,7 +110,7 @@
   },
   "lux_radar": {
     "structure": {
-      "root": "/home/vinicius/luxverso-archive/Lux-Radar/",
+      "root": "/app/luxverso-archive/Lux-Radar/",
       "dirs_3_levels": {
         "scripts": ["scripts/"],
         "src": ["src/lux_radar/"],
@@ -166,17 +166,17 @@
       {"file": "docs/ARCHITECTURE.md", "title": "Arquitetura inicial", "desc": "171 lines. Camadas: Source Registry -> Collector -> SourceObservation -> Evidence -> Release Manifest -> Normalization -> Canonical Opportunity -> Context/Delivery. Compatibilidade com TraceFoundry"},
       {"file": "docs/TRACEFOUNDRY_COMPATIBILITY.md", "title": "Compatibilidade Lux Radar × TraceFoundry", "desc": "72 lines. MAPEAMENTO COMPLETO de conceitos entre Lux Radar e TraceFoundry. Reuso/ADAPT para cada conceito (Source, Observation, Evidence, Manifest, NormalizedRecord, ResearchMove, InvestigationState)"},
       {"file": "docs/SOURCE_INVENTORY.md", "title": "Inventario inicial de fontes", "desc": "93 lines. 20 fontes catalogadas: MMA/FNMA, MMA/Fundo Clima, MCTI, Finep, BNDES/Floresta Viva, FAPESB, CNPq, CAPES, Fundo Amazonia, Embrapii, Petrobras Socioambiental, Sebrae, RNP, Transferegov, EU Funding, CINEA/LIFE, Simpler.Grants.gov, NSF, UNESCO, Banco Mundial"},
-      {"file": "docs/signal-engine-v1.md", "title": "Sustainability Signal Engine v1", "desc": "74 lines. Experimento com 7 fontes (FUNBIO, Fundacao Boticario, Prosas, CNPq, PNCP, IBGE, MapBiomas). Release global: 223 observacoes, 217 evidencias, 813 normalizados, 581 canonicos, 15 oportunidades atuais, 615 sinais"},
+      {"file": "docs/signal-engine-v1.md", "title": "Sustainability Signal Engine v1", "desc": "74 lines. Experimento com 7 fontes (FUNBIO, Fundacao Boticario, Prosas, CNPq, CONTRATOS, IBGE, MapBiomas). Release global: 223 observacoes, 217 evidencias, 813 normalizados, 581 canonicos, 15 oportunidades atuais, 615 sinais"},
       {"file": "docs/environmental-signal-engine-v1.md", "title": "Environmental Signal Engine v1", "desc": "33 lines. 5 fontes ambientais: INPE Queimadas (FIRE_ACTIVITY), GBIF (BIODIVERSITY_OCCURRENCE), NASA EONET (NATURAL_EVENT), IBGE Localidades (TERRITORIAL_CONTEXT), Open-Meteo (CLIMATE_CONDITION)"},
-      {"file": "docs/PNCP_INTERFACE.md", "title": "Interface com pncp-data-pipeline", "desc": "82 lines. Definicao de como Lux Radar consome dados do pipeline PNCP via releases versionados"},
+      {"file": "docs/CONTRATOS_INTERFACE.md", "title": "Interface com contratos-data-pipeline", "desc": "82 lines. Definicao de como Lux Radar consome dados do pipeline CONTRATOS via releases versionados"},
       {"file": "docs/PRODUCT_THESIS.md", "title": "Tese de produto", "desc": "124 lines. Problema, tese central: maquina de aquisicao, observacao, evidencia e inteligencia de oportunidades"},
       {"file": "docs/ROADMAP.md", "title": "Roadmap", "desc": "108 lines. Fases: 0 (territorio), 1 (20 fontes), 2 (3 perfis: Transferegov, FAPESB, BNDES/Floresta Viva)"},
       {"file": "docs/GOVERNANCE.md", "title": "Governance", "desc": "Nao lido integralmente"},
       {"file": "docs/PRODUCT_THESIS.md", "title": "Product Thesis", "desc": "Nao lido integralmente"},
-      {"file": "docs/EXECUTION_REPORT_2026-08-25.md", "title": "Execution Report", "desc": "Nao lido integralmente"},
-      {"file": "docs/ui-verification-2026-08-26.md", "title": "UI Verification", "desc": "Nao lido integralmente"},
+      {"file": "docs/EXECUTION_REPORT_2026-XX-XX.md", "title": "Execution Report", "desc": "Nao lido integralmente"},
+      {"file": "docs/ui-verification-2026-XX-XX.md", "title": "UI Verification", "desc": "Nao lido integralmente"},
       {"file": "docs/JHOEL_TASKS.md", "title": "Jhoel Tasks", "desc": "Nao lido integralmente"},
-      {"file": "docs/research-2026-08-25.md", "title": "Research 2026-08-25", "desc": "Nao lido integralmente"},
+      {"file": "docs/research-2026-XX-XX.md", "title": "Research 2026-XX-XX", "desc": "Nao lido integralmente"},
       {"file": "docs/decisions/0001-public-lux-radar-boundary.md", "title": "ADR 0001 — Public boundary", "desc": "Decisao arquitetonica"},
       {"file": "docs/decisions/0002-observation-and-acquisition-first.md", "title": "ADR 0002 — Observation first", "desc": "Decisao arquitetonica"}
     ],
@@ -204,7 +204,7 @@
     },
     "releases": {
       "exists": true,
-      "dir": "fixtures/releases/2026-08-25-pilot-safe/",
+      "dir": "fixtures/releases/2026-XX-XX-pilot-safe/",
       "data_files": [
         "data/opportunities.json",
         "data/current-opportunities.json",

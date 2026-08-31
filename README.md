@@ -1,7 +1,7 @@
 # LuxVerso × Hermes Bridge
 
 > Ponte operacional entre o ecossistema LuxVerso (TraceFoundry, Lux-Radar, Lux-Lab, LuxMemory) e o Hermes Agent v0.19.0.
-> Materializa capacidades, playbooks, skills e integrações descobertas na **Missão LuxVerso Arqueologia** (2026-08-31).
+> Materializa capacidades, playbooks, skills e integrações descobertas na **Missão LuxVerso Arqueologia** (2026-XX-XX).
 
 ## O que tem aqui
 
@@ -39,9 +39,9 @@ Estado e relatório completo da missão.
 
 ### 1. Subir a API LuxMemory
 ```bash
-cd /home/vinicius/luxverso-archive/LuxMemory/src
-LUXMEMORY_ROOT=/home/vinicius/luxverso-archive/LuxMemory \
-PYTHONPATH=/home/vinicius/.hermes/integrations \
+cd /app/luxverso-archive/LuxMemory/src
+LUXMEMORY_ROOT=/app/luxverso-archive/LuxMemory \
+PYTHONPATH=/app/.hermes/integrations \
 python3 app_local.py
 # API: http://127.0.0.1:8787
 ```
@@ -49,7 +49,7 @@ python3 app_local.py
 ### 2. Do Hermes, usar o cliente
 ```python
 import sys
-sys.path.insert(0, '/home/vinicius/.hermes/integrations')
+sys.path.insert(0, '/app/.hermes/integrations')
 from luxmemory_client import get_client
 c = get_client()
 caps = c.capabilities(query="PNCP", limit=5)
@@ -71,5 +71,5 @@ Já carrega automaticamente no próximo turno do Hermes (skill instalada em `~/.
 
 ## Origem
 
-Gerado pela **Missão LuxVerso Arqueologia** (2026-08-31).
+Gerado pela **Missão LuxVerso Arqueologia** (2026-XX-XX).
 Documentação completa: `MISSION_REPORT.md`.

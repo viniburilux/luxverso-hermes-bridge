@@ -7,7 +7,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
-ROOT = Path(os.environ.get('LUXMEMORY_ROOT', '/home/vinicius/luxverso-archive/LuxMemory'))
+ROOT = Path(os.environ.get('LUXMEMORY_ROOT=os.environ.get('LUXMEMORY_ROOT', '/app/data/memory')/app/luxverso-archive/LuxMemory'))
 MEMORY_PATH = ROOT / 'data' / 'memory.jsonl'
 SKILLS_PATH = ROOT / 'data' / 'skills.json'
 CAPABILITIES_PATH = ROOT / 'data' / 'capabilities.jsonl'

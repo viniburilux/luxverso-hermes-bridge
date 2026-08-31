@@ -117,12 +117,19 @@ except ImportError:
 # Reuso 3: Capability Registry local
 import yaml
 
-AGENT_ROOT = Path(os.environ.get('LUX_AGENT_ROOT', '/home/vinicius/.hermes/lux_agent'))
+AGENT_ROOT = Path(os.environ.get('LUX_AGENT_ROOT', '/app/lux_agent'))
+# Modo degradado: criar raiz apenas se gravavel; em filesystem read-only apenas simular
+def _safe_mkdir(path):
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+    except (PermissionError, OSError):
+        pass
+_safe_mkdir(AGENT_ROOT)
 STATE_DIR = AGENT_ROOT / 'state'
 CYCLES_DIR = AGENT_ROOT / 'cycles'
 ARTIFACTS_DIR = AGENT_ROOT / 'artifacts'
-REGISTRY_PATH = Path(os.environ.get('LUX_REGISTRY_PATH', '/home/vinicius/.hermes/capabilities/registry.yaml'))
-PLAYBOOKS_DIR = Path(os.environ.get('LUX_PLAYBOOKS_DIR', '/home/vinicius/.hermes/playbooks'))
+REGISTRY_PATH = Path(os.environ.get('LUX_REGISTRY_PATH', '/app/capabilities/registry.yaml'))
+PLAYBOOKS_DIR = Path(os.environ.get('LUX_PLAYBOOKS_DIR', '/app/playbooks'))
 
 
 # ============================================================================
@@ -180,16 +187,23 @@ class InvestigationCycle:
 
 def _opportunity_dir(opportunity_id: str) -> Path:
     d = AGENT_ROOT / opportunity_id
-    d.mkdir(exist_ok=True)
-    (d / 'cycles').mkdir(exist_ok=True)
-    (d / 'artifacts').mkdir(exist_ok=True)
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+        (d / 'cycles').mkdir(exist_ok=True)
+        (d / 'artifacts').mkdir(exist_ok=True)
+    except Exception:
+        pass
     return d
 
 
 def save_cycle(cycle: InvestigationCycle) -> Path:
     odir = _opportunity_dir(cycle.opportunity_id)
     p = odir / 'cycles' / f'cycle_{cycle.cycle_n:03d}.json'
-    p.write_text(json.dumps(cycle.to_dict(), indent=2, ensure_ascii=False))
+    try:
+        p.write_text(json.dumps(cycle.to_dict(), indent=2, ensure_ascii=False))
+    except (PermissionError, OSError):
+        # Filesystem read-only ou sem permissao: ciclo em memoria apenas
+        pass
     return p
 
 

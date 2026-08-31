@@ -1,8 +1,8 @@
 # Playbook: Repository Archaeology
 
 **Evidência:** Aplicado 2 vezes com sucesso:
-1. **Cgu 2026** (2026-08-30): reconstrução de 22 repos LuxVerso → `HERMES_LUXVERSO_ARCHITECTURE.md` (482 linhas)
-2. **Missão Luxverso-Arqueologia** (2026-08-31): descoberta de 35 repos + estrutura + capabilities → `arqueologia_report.json` (18KB)
+1. **Concurso 2026** (2026-XX-XX): reconstrução de 22 repos LuxVerso → `HERMES_LUXVERSO_ARCHITECTURE.md` (482 linhas)
+2. **Missão Luxverso-Discovery** (2026-XX-XX): descoberta de 35 repos + estrutura + capabilities → `arqueologia_report.json` (18KB)
 
 **Quando usar:** Vini disser "mapeie esse repo", "entenda essa arquitetura", "veja se tem coisa útil no projeto X".
 
@@ -99,5 +99,5 @@ grep -rE "hermes|integration|bridge" --include='*.py' --include='*.md' . | head 
 
 **Status:** proven
 **Confidence:** 0.90
-**Last used:** 2026-08-31 (Missão Luxverso Arqueologia)
+**Last used:** 2026-XX-XX (Missão Luxverso Arqueologia)
 **Reused count:** 2

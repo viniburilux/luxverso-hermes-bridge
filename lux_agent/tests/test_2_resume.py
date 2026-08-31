@@ -21,6 +21,13 @@ print("="*70)
 c = investigate(OPORTUNIDADE, auto_resume=True)
 print(f"\n[1] Auto-resume: cycle_n={c.cycle_n}")
 print(f"  evid={len(c.evidence)} claims={len(c.claims)} gaps={len(c.gaps)}")
+# Se nao ha estado (modo degradado / primeira execucao), criar
+if c.cycle_n == 0 and len(c.evidence) == 0:
+    print("  (modo degradado: criando ciclo 0 basico)")
+    apply_action(c, 'acao adaptativa generica base')
+    e_base = add_evidence(c, kind='web_url', source='example_source', uri='https://example.org/doc-base')
+    add_claim(c, 'afirmacao base observada', 'observed', (e_base.evidence_id,))
+    add_gap(c, 'gap material generico', 'material', ('REQUIRED_BASE',))
 
 apply_action(c, 'acao adaptativa generica 3')
 

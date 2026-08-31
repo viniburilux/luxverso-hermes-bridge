@@ -4,7 +4,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
-sys.path.insert(0, '/home/vinicius/.hermes/integrations')
+sys.path.insert(0, '/app/.hermes/integrations')
 from retrieve_patched import (  # noqa: E402
     capability_summary,
     compare,

@@ -18,9 +18,9 @@ capabilities:
   - read_file
   scripts:
   - TraceFoundry/src/oi_discovery/investigation.py
-  repo: viniburilux/TraceFoundry
+  repo: sample-user/TraceFoundry
   paths:
-  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/investigation.py
+  - /app/archive/TraceFoundry/src/oi_discovery/investigation.py
   inputs:
   - objetivo
   - evidencias[]
@@ -46,9 +46,9 @@ capabilities:
   - terminal
   scripts:
   - TraceFoundry/src/oi_discovery/query.py
-  repo: viniburilux/TraceFoundry
+  repo: sample-user/TraceFoundry
   paths:
-  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/query.py
+  - /app/archive/TraceFoundry/src/oi_discovery/query.py
   inputs:
   - source
   - dataset_id
@@ -74,9 +74,9 @@ capabilities:
   - terminal
   scripts:
   - TraceFoundry/src/oi_discovery/bridge.py
-  repo: viniburilux/TraceFoundry
+  repo: sample-user/TraceFoundry
   paths:
-  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/bridge.py
+  - /app/archive/TraceFoundry/src/oi_discovery/bridge.py
   inputs:
   - manifest
   - source_path
@@ -94,7 +94,7 @@ capabilities:
   type: data-acquisition
   domain: transparencia-publica
   problem_types:
-  - cgu-concurso
+  - discovery-concurso
   - auditoria-publica
   - compliance
   - govtech
@@ -102,11 +102,11 @@ capabilities:
   - terminal
   - web_extract
   scripts:
-  - pncp-data-pipeline (privado)
+  - contratos-data-pipeline (privado)
   - cgu_registry/01_collect_pncp.py
-  repo: viniburilux/pncp-data-pipeline
+  repo: sample-user/contratos-data-pipeline
   paths:
-  - /home/vinicius/cgu-reuso-2026/
+  - /app/concurso-reuso-2026/
   inputs:
   - UF
   - mes
@@ -119,7 +119,7 @@ capabilities:
   reused_count: 2
   last_used: '2026-08-31'
   status: proven
-  limitations: Requer dados em drive viniburilux@gmail.com
+  limitations: Requer dados em drive sample-user@gmail.com
   classe: A
 - id: lr-environmental-parse
   name: Parsear sinais ambientais (INPE, GBIF, EONET, IBGE, Open-Meteo)
@@ -134,9 +134,9 @@ capabilities:
   - web_extract
   scripts:
   - Lux-Radar/scripts/environmental_signals.py
-  repo: viniburilux/Lux-Radar
+  repo: sample-user/Lux-Radar
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/environmental_signals.py
+  - /app/archive/Lux-Radar/scripts/environmental_signals.py
   inputs:
   - source
   - region
@@ -162,9 +162,9 @@ capabilities:
   - terminal
   scripts:
   - Lux-Radar/scripts/quality_layer.py
-  repo: viniburilux/Lux-Radar
+  repo: sample-user/Lux-Radar
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/quality_layer.py
+  - /app/archive/Lux-Radar/scripts/quality_layer.py
   inputs:
   - raw_record
   outputs:
@@ -190,9 +190,9 @@ capabilities:
   - terminal
   scripts:
   - Lux-Radar/scripts/build_release.py
-  repo: viniburilux/Lux-Radar
+  repo: sample-user/Lux-Radar
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/build_release.py
+  - /app/archive/Lux-Radar/scripts/build_release.py
   inputs:
   - sources[]
   - config
@@ -205,8 +205,8 @@ capabilities:
   status: ready
   limitations: Requer config e sources definidos
   classe: A
-- id: ll-pncp-bahia
-  name: Pipeline PNCP-Bahia Intelligence
+- id: ll-contratos-bahia
+  name: Pipeline contratos-bahia Intelligence
   type: data-pipeline
   domain: transparencia-publica
   problem_types:
@@ -217,14 +217,14 @@ capabilities:
   - web_extract
   - write_file
   scripts:
-  - Lux-Lab/pncp_bahia_intelligence/analyze_bahia.py
-  - Lux-Lab/pncp_bahia_intelligence/drilldown_bahia.py
-  - Lux-Lab/pncp_bahia_intelligence/thematic_queries.py
-  - Lux-Lab/pncp_bahia_intelligence/analyze_correntina_2026.py
-  - Lux-Lab/pncp_bahia_intelligence/collect_pncp_diario_evidence.py
-  repo: viniburilux/Lux-Lab
+  - Lux-Lab/contratos_bahia_intelligence/analyze_bahia.py
+  - Lux-Lab/contratos_bahia_intelligence/drilldown_bahia.py
+  - Lux-Lab/contratos_bahia_intelligence/thematic_queries.py
+  - Lux-Lab/contratos_bahia_intelligence/analyze_correntina_2026.py
+  - Lux-Lab/contratos_bahia_intelligence/collect_pncp_diario_evidence.py
+  repo: sample-user/Lux-Lab
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Lab/pncp_bahia_intelligence/
+  - /app/archive/Lux-Lab/contratos_bahia_intelligence/
   inputs:
   - municipality
   - year
@@ -251,9 +251,9 @@ capabilities:
   - web_extract
   scripts:
   - Lux-Lab/document_acquisition_v0/
-  repo: viniburilux/Lux-Lab
+  repo: sample-user/Lux-Lab
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Lab/document_acquisition_v0/
+  - /app/archive/Lux-Lab/document_acquisition_v0/
   inputs:
   - document_id
   - source
@@ -266,8 +266,8 @@ capabilities:
   status: proven
   limitations: null
   classe: A
-- id: ll-sigmine
-  name: Pipeline territorial mineral (SIGMINE + AlphaEarth)
+- id: ll-mineral-retrieval
+  name: Pipeline territorial mineral (mineral-retrieval + AlphaEarth)
   type: data-pipeline
   domain: territorial
   problem_types:
@@ -277,10 +277,10 @@ capabilities:
   tools_used:
   - terminal
   scripts:
-  - Lux-Lab/sigmine_mineral_retrieval/
-  repo: viniburilux/Lux-Lab
+  - Lux-Lab/mineral-retrieval_mineral_retrieval/
+  repo: sample-user/Lux-Lab
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Lab/sigmine_mineral_retrieval/
+  - /app/archive/Lux-Lab/mineral-retrieval_mineral_retrieval/
   inputs:
   - region
   - mineral_type
@@ -288,7 +288,7 @@ capabilities:
   outputs:
   - 20 candidatos
   - UMAP clusters
-  evidencia: '7 blocos: SIGMINE query → AlphaEarth → UMAP → retrieval'
+  evidencia: '7 blocos: mineral-retrieval query → AlphaEarth → UMAP → retrieval'
   reused_count: 0
   last_used: '2026-08-30'
   status: ready
@@ -304,10 +304,10 @@ capabilities:
   tools_used:
   - terminal
   scripts:
-  - Lux-Lab/asie_experiment_v0/
-  repo: viniburilux/Lux-Lab
+  - Lux-Lab/private-experiment
+  repo: sample-user/Lux-Lab
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Lab/asie_experiment_v0/
+  - /app/archive/Lux-Lab/private-experiment
   inputs:
   - target_system
   - method_to_replicate
@@ -330,9 +330,9 @@ capabilities:
   - web_extract
   scripts:
   - Lux-Lab/virgin_domain_probes/ (23 scripts)
-  repo: viniburilux/Lux-Lab
+  repo: sample-user/Lux-Lab
   paths:
-  - /home/vinicius/luxverso-archive/Lux-Lab/virgin_domain_probes/
+  - /app/archive/Lux-Lab/virgin_domain_probes/
   inputs:
   - domain_name
   - first_questions
@@ -349,7 +349,7 @@ capabilities:
   type: orchestration
   domain: meta
   problem_types:
-  - paralelizar-investigacao
+  - parall-investigacao
   - multi-llm
   - orchestration
   tools_used:
@@ -385,7 +385,7 @@ capabilities:
   - state.db (SQLite + FTS5)
   repo: Hermes v0.19.0
   paths:
-  - /home/vinicius/.hermes/state.db
+  - /app/.hermes/state.db
   inputs:
   - query
   - session_id
@@ -410,7 +410,7 @@ capabilities:
   - terminal
   - web_extract
   scripts: []
-  repo: viniburilux/LuxVerso ecosystem
+  repo: sample-user/LuxVerso ecosystem
   paths: []
   inputs:
   - query
@@ -425,7 +425,7 @@ capabilities:
   limitations: Sem MCP GitHub ativo
   classe: A
 - id: h-google-drive
-  name: Google Drive (compartilhado viniburilux@gmail.com)
+  name: Google Drive (compartilhado sample-user@gmail.com)
   type: integration
   domain: meta
   problem_types:
@@ -435,36 +435,36 @@ capabilities:
   - terminal
   - web_extract
   scripts: []
-  repo: viniburilux/LuxVerso ecosystem
+  repo: sample-user/LuxVerso ecosystem
   paths:
-  - /home/vinicius/.hermes/google_oauth/
+  - /app/.hermes/google_oauth/
   inputs:
   - folder_id
   - file_id
   outputs:
   - file content
-  evidencia: Token configurado, refresh funcionando, usado na pasta CGU
+  evidencia: Token configurado, refresh funcionando, usado na pasta discovery
   reused_count: 1
   last_used: '2026-08-31'
   status: ready
   limitations: Token expira rapido, precisa refresh
   classe: A
-- id: cgu-cross-data-fires
+- id: discovery-cross-data-fires
   name: Cross-data PNCP x NASA FIRMS (focos de queimada)
   type: analysis
   domain: transparencia-publica
   problem_types:
-  - cgu-concurso
+  - discovery-concurso
   - analise-ambiental
   - resposta-publica
   tools_used:
   - terminal
   - web_extract
   scripts:
-  - cgu-reuso-2026/scripts/
-  repo: viniburilux/cgu-reuso-2026
+  - concurso-reuso-2026/scripts/
+  repo: sample-user/concurso-reuso-2026
   paths:
-  - /home/vinicius/cgu-reuso-2026/
+  - /app/concurso-reuso-2026/
   inputs:
   - uf
   - data_range
@@ -477,21 +477,21 @@ capabilities:
   status: proven
   limitations: null
   classe: A
-- id: cgu-cnes-cross
+- id: discovery-cnes-cross
   name: Cross-data CNES (hospitais) x FIRMS
   type: analysis
   domain: saude-publica
   problem_types:
-  - cgu-concurso
+  - discovery-concurso
   - saude-em-area-risco
   tools_used:
   - terminal
   - web_extract
   scripts:
-  - cgu-reuso-2026/scripts/
-  repo: viniburilux/cgu-reuso-2026
+  - concurso-reuso-2026/scripts/
+  repo: sample-user/concurso-reuso-2026
   paths:
-  - /home/vinicius/cgu-reuso-2026/
+  - /app/concurso-reuso-2026/
   inputs:
   - uf
   - radius_km
@@ -517,7 +517,7 @@ capabilities:
   scripts: []
   repo: NousResearch/hermes-agent
   paths:
-  - /home/vinicius/.hermes/skills/osint-investigation/
+  - /app/.hermes/skills/osint-investigation/
   inputs:
   - entity_name
   - jurisdiction
@@ -535,14 +535,14 @@ capabilities:
   domain: meta
   problem_types:
   - executar-plano
-  - paralelizar-implementacao
+  - parall-implementacao
   tools_used:
   - delegate_task
   - todo
   scripts: []
   repo: NousResearch/hermes-agent
   paths:
-  - /home/vinicius/.hermes/skills/subagent-driven-development/
+  - /app/.hermes/skills/subagent-driven-development/
   inputs:
   - plan
   - tasks[]
@@ -567,7 +567,7 @@ capabilities:
   scripts: []
   repo: NousResearch/hermes-agent
   paths:
-  - /home/vinicius/.hermes/skills/watchers/
+  - /app/.hermes/skills/watchers/
   inputs:
   - source_url
   - interval

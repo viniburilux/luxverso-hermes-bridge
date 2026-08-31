@@ -1,8 +1,8 @@
 # 🎯 RELATÓRIO FINAL — MISSÃO LUXVERSO ARQUEOLOGIA
 
-**Período:** 2026-08-31 04:30 — 06:00 UTC (~90 minutos)
+**Período:** 2026-XX-XX XX:XX — YY:YY UTC (~90 minutos)
 **Operador:** Hermes v0.19.0 + 3 subagentes arqueólogos
-**Imperador:** Vinícius Buri Lux
+**Imperador:** Operator
 
 ---
 
@@ -13,14 +13,14 @@
 
 | Tipo | Nome | Status |
 |------|------|--------|
-| **Públicos** | TraceFoundry, Lux-Radar, LuxVerso, cgu-reuso-2026, viniburilux.github.io, viniburilux | núcleo |
+| **Públicos** | TraceFoundry, Lux-Radar, LuxVerso, concurso-reuso-2026, sample-user.github.io, sample-user | núcleo |
 | | explorador-dados-bahia, monitor-gastos-pncp, rede-artistas-bahia-2025, gastos-reais-ba, Manguezais-Brasil, gastos-eventos-BA, Radar-Contratos-BA | transparência BA |
-| | inteligencia-biotecnologica, lux-fito-pharma, ghostworks, ghostworks-atlas, organoid-intelligence, apda-framework, agronutri-demo | pesquisa |
+| | inteligencia-biotecnologica, lux-fito-pharma, territorial-engine, territorial-engine-atlas, organoid-intelligence, apda-framework, agronutri-demo | pesquisa |
 | | TTI_Brazil_2017_2024, LuxVerso-Semantic-Convergence-Study, fractal-seed-001-cmaf, cmotp-replication | metodologia |
 | | radan-prototipovisual | visual |
-| **Privados** | LuxMemory (567MB), Lux-Lab (67.9MB), luxverso-corpus, entity-intelligence, inteligencia-biotecnologica-agropecuaria, Lux-Radar-Acquisition, OI-Organoids-Intelligence, Registro-de-Glitches-Providenciais, Codex-LuxHub, pncp-data-pipeline | internos |
+| **Privados** | LuxMemory (567MB), Lux-Lab (67.9MB), luxverso-corpus, entity-intelligence, inteligencia-biotecnologica-agropecuaria, Lux-Radar-Acquisition, OI-Organoids-Intelligence, Registro-de-Glitches-Providenciais, Codex-LuxHub, contratos-data-pipeline | internos |
 
-### Locais (já clonados em `/home/vinicius/luxverso-archive/`)
+### Locais (já clonados em `/app/luxverso-archive/`)
 12 repos totalizando **~600MB** com 2.375 arquivos.
 
 ---
@@ -33,10 +33,10 @@
 | Camada | Origem | Capabilities |
 |--------|--------|--------------|
 | **TraceFoundry** | 3 | InvestigationState, DiscoveryQuery, BuildLink |
-| **Lux-Radar** | 4 | PNCP-collect, environmental-parse, quality-layer, build-release |
-| **Lux-Lab** | 5 | pncp-bahia, document-acquisition, sigmine, asie-cycle, domain-probes |
+| **Lux-Radar** | 4 | contratos collect, environmental-parse, quality-layer, build-release |
+| **Lux-Lab** | 5 | contratos-bahia, document-acquisition, mineral-retrieval, asie-cycle, domain-probes |
 | **Hermes nativo** | 4 | delegate-task, session-search, github-search, google-drive |
-| **CGU hoje** | 2 | cross-data-fires, cnes-cross |
+| **CGOV hoje** | 2 | cross-data-fires, cnes-cross |
 | **Skills oficiais** | 3 | osint, subagent-dev, watchers |
 
 ### LuxMemory: 25 capabilities integradas
@@ -68,15 +68,15 @@
 - **9 skills indexadas** com semântica
 
 ### Lux-Lab
-- **pncp_bahia_intelligence/** — 6 scripts Python de produção
+- **contratos bahia_intelligence/** — 6 scripts Python de produção
 - **document_acquisition_v0/** — 4 adapters validados (patentes, papers)
 - **virgin_domain_probes/** — 23 scripts + 146 JSONs (32MB de artefatos)
-- **asie_experiment_v0/** — cadeia adaptativa explorada→reconstrução→comparação
+- **private-experiment — cadeia adaptativa explorada→reconstrução→comparação
 
 ### Experiências Anteriores
-- **Cgu 2026** (2026-08-31): 4 iniciativas PROVEN (cross-data PNCP×FIRMS×CNES×IBGE)
+- **Concurso 2026** (2026-XX-XX): 4 iniciativas PROVEN (cross-data PNCP×FIRMS×CNES×IBGE)
 - **Superbet Lab** (2026-08): 7 experimentos (exp1-exp7) seguindo padrão: explore→extract→events→odds→api→structured→hypotheses
-- **Reconstrução LuxVerso** (2026-08-30): 22 repos mapeados em 482 linhas
+- **Reconstrução LuxVerso** (2026-XX-XX): 22 repos mapeados em 482 linhas
 
 ---
 
@@ -115,9 +115,9 @@ Decisão: **só 1**, porque as outras 3 oficiais já cobrem 80% do que precisamo
 
 | Playbook | Evidência | Tamanho |
 |----------|-----------|---------|
-| `investigate-new-domain.md` | 2x: Superbet exp1-7 + Cgu 4 fases | 6.4KB |
-| `repository-archaeology.md` | 2x: Cgu 22 repos + Missão Luxverso | 3.8KB |
-| `data-source-discovery.md` | 1x: Cgu 4 fontes em 1 turno | 3.5KB |
+| `investigate-new-domain.md` | 2x: Superbet exp1-7 + Concurso 4 fases | 6.4KB |
+| `repository-archaeology.md` | 2x: Concurso 22 repos + Missão Luxverso | 3.8KB |
+| `data-source-discovery.md` | 1x: Concurso 4 fontes em 1 turno | 3.5KB |
 
 Cada playbook tem:
 - Quando usar
@@ -198,7 +198,7 @@ Cada playbook tem:
 | # | Cenário | Resultado | Confiança |
 |---|---------|-----------|-----------|
 | 1 | **Oportunidade nova desconhecida** (mudanças climáticas Amazônia) | ✅ GO | Média |
-| 2 | **Parecida com anterior** (CGU cross-data mas SP) | ✅ GO_FORTE | 90% |
+| 2 | **Parecida com anterior** (CGOV cross-data mas SP) | ✅ GO_FORTE | 90% |
 | 3 | **Múltiplas capacidades** (3 estados paralelos) | ✅ GO | Alta |
 
 **O sistema testado:**
@@ -244,7 +244,7 @@ Cada playbook tem:
 ### Curto prazo (≤1 dia cada)
 1. **Auto-start da API LuxMemory** — hook no gateway/curator
 2. **Versionar `~/.hermes/` em repo Git** (`luxverso-hermes`?) — preservar tudo
-3. **Indexar as 5 docs-chave** como skills/skills-loadable — `IMPERADOR_DOC.md`, `HERMES_LUXVERSO_ARCHITECTURE.md`, `cgu_discovery_audit.md`
+3. **Indexar as 5 docs-chave** como skills/skills-loadable — `IMPERADOR_DOC.md`, `HERMES_LUXVERSO_ARCHITECTURE.md`, `discovery_audit_audit.md`
 4. **Criar mais 1-2 playbooks** (opportunity-triage, multi-agent-research)
 
 ### Médio prazo (≤1 semana)

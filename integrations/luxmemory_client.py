@@ -70,7 +70,7 @@ if __name__ == '__main__':
     client = get_client()
     if not client.is_alive():
         print("ERRO: LuxMemory API não está respondendo em", client.BASE_URL)
-        print("Suba com: cd /home/vinicius/luxverso-archive/LuxMemory/src && LUXMEMORY_ROOT=/home/vinicius/luxverso-archive/LuxMemory PYTHONPATH=/home/vinicius/.hermes/integrations:/home/vinicius/luxverso-archive/LuxMemory/src python3 app_patched.py")
+        print("Suba com: cd /app/luxverso-archive/LuxMemory/src && LUXMEMORY_ROOT=/app/luxverso-archive/LuxMemory PYTHONPATH=/app/.hermes/integrations:/app/luxverso-archive/LuxMemory/src python3 app_patched.py")
         sys.exit(1)
 
     if len(sys.argv) < 2:

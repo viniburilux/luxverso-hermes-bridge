@@ -33,7 +33,7 @@ Extraia do pedido do Imperador:
 
 ```python
 import sys
-sys.path.insert(0, '/home/vinicius/.hermes/integrations')
+sys.path.insert(0, '/app/.hermes/integrations')
 from luxmemory_client import get_client
 c = get_client()
 # Buscar capabilities relevantes
@@ -52,9 +52,9 @@ curl -s "http://127.0.0.1:8787/api/search?q=<query>&mode=answer"
 
 **Se a API não estiver rodando:** Suba com:
 ```bash
-cd /home/vinicius/luxverso-archive/LuxMemory/src
-LUXMEMORY_ROOT=/home/vinicius/luxverso-archive/LuxMemory \
-PYTHONPATH=/home/vinicius/.hermes/integrations \
+cd /app/luxverso-archive/LuxMemory/src
+LUXMEMORY_ROOT=/app/luxverso-archive/LuxMemory \
+PYTHONPATH=/app/.hermes/integrations \
 python3 app_local.py
 ```
 
@@ -105,7 +105,7 @@ c = get_client()
 caps = c.capabilities(query="kaggle competition agent")
 # Exemplo: encontra CAP-OBS-HETEROGENEOUS_CORPUS_INTELLIGENCE (transferable)
 resume = c.resume(query="competição ML agent", objective="entrar e produzir resultado")
-# Identifica experiência passada (CGU hoje, Kaggle-OpenAI-Agent-Security)
+# Identifica experiência passada (CGOV hoje, Kaggle-OpenAI-Agent-Security)
 # Carrega playbook investigate-new-domain
 # Propõe: usar TraceFoundry para registrar InvestigationState, gerar adapter se necessário
 # Delega para 2 subagentes em paralelo
@@ -117,8 +117,8 @@ resume = c.resume(query="competição ML agent", objective="entrar e produzir re
 - `~/.hermes/playbooks/*.md` — playbooks reutilizáveis
 - `~/.hermes/integrations/luxmemory_client.py` — cliente Python
 - `~/.hermes/mission_log/mission_log.jsonl` — log persistente
-- `/home/vinicius/luxverso-archive/LuxMemory/` — fonte de capabilities/skills
-- `/home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/` — schemas formais
+- `/app/luxverso-archive/LuxMemory/` — fonte de capabilities/skills
+- `/app/luxverso-archive/TraceFoundry/src/oi_discovery/` — schemas formais
 
 ## Não-fazer
 
