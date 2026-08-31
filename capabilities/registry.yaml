@@ -1,0 +1,581 @@
+schema_version: hermes-capability-v1
+generated_at: '2026-08-31T04:35:00Z'
+generator: mission-lu arqueologia v0.1
+description: Registry vivo de capabilities do Hermes + ecossistema LuxVerso
+total: 21
+capabilities:
+- id: tf-inves-state
+  name: InvestigationState (criar/gerenciar)
+  type: methodology
+  domain: evidence
+  problem_types:
+  - investigacao-complexa
+  - pesquisa-rastreada
+  - decisao-com-evidencia
+  tools_used:
+  - terminal
+  - write_file
+  - read_file
+  scripts:
+  - TraceFoundry/src/oi_discovery/investigation.py
+  repo: viniburilux/TraceFoundry
+  paths:
+  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/investigation.py
+  inputs:
+  - objetivo
+  - evidencias[]
+  - gaps[]
+  - moves[]
+  outputs:
+  - InvestigationState JSON
+  - Claim (com status epistemologico)
+  evidencia: Arquivo investigation.py tem classes InvestigationState, Claim, EvidenceGap, ResearchMove (frozen dataclasses)
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Requer clonar TraceFoundry e adicionar ao sys.path
+  classe: A
+- id: tf-discovery-query
+  name: DiscoveryQuery (DSL parser)
+  type: methodology
+  domain: evidence
+  problem_types:
+  - busca-dados-abertos
+  - filtro-rastreado
+  tools_used:
+  - terminal
+  scripts:
+  - TraceFoundry/src/oi_discovery/query.py
+  repo: viniburilux/TraceFoundry
+  paths:
+  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/query.py
+  inputs:
+  - source
+  - dataset_id
+  - formats[]
+  - modalities[]
+  - date_range
+  outputs:
+  - ParsedQuery
+  evidencia: query.py tem parser que rejeita campos nao suportados (whitelist explicita)
+  reused_count: 0
+  last_used: never
+  status: ready
+  limitations: Whitelist rigorosa - nao relaxa
+  classe: A
+- id: tf-bridge-link
+  name: Build Link (ponte manifest <-> memoria)
+  type: integration
+  domain: evidence
+  problem_types:
+  - ponte-sistemas
+  - registro-com-proveniencia
+  tools_used:
+  - terminal
+  scripts:
+  - TraceFoundry/src/oi_discovery/bridge.py
+  repo: viniburilux/TraceFoundry
+  paths:
+  - /home/vinicius/luxverso-archive/TraceFoundry/src/oi_discovery/bridge.py
+  inputs:
+  - manifest
+  - source_path
+  - capability_ids[]
+  outputs:
+  - Link object com source, observations, interpretation
+  evidencia: bridge.py:build_link() ja implementa objeto ponte (ainda nao escreve em LuxMemory DB)
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Atualmente retorna dict, nao persiste. Precisamos camada de storage.
+  classe: A
+- id: lr-pncp-collect
+  name: Coletar editais PNCP (qualquer UF, qualquer mes)
+  type: data-acquisition
+  domain: transparencia-publica
+  problem_types:
+  - cgu-concurso
+  - auditoria-publica
+  - compliance
+  - govtech
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - pncp-data-pipeline (privado)
+  - cgu_registry/01_collect_pncp.py
+  repo: viniburilux/pncp-data-pipeline
+  paths:
+  - /home/vinicius/cgu-reuso-2026/
+  inputs:
+  - UF
+  - mes
+  - ano
+  - modalidade
+  outputs:
+  - CSV classificado
+  - Parquet
+  evidencia: Pipeline ja coletou 540 parquets (2025+2026) - 27 UFs x 12 meses
+  reused_count: 2
+  last_used: '2026-08-31'
+  status: proven
+  limitations: Requer dados em drive viniburilux@gmail.com
+  classe: A
+- id: lr-environmental-parse
+  name: Parsear sinais ambientais (INPE, GBIF, EONET, IBGE, Open-Meteo)
+  type: data-acquisition
+  domain: environmental
+  problem_types:
+  - analise-ambiental
+  - crise-climatica
+  - queimadas
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - Lux-Radar/scripts/environmental_signals.py
+  repo: viniburilux/Lux-Radar
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/environmental_signals.py
+  inputs:
+  - source
+  - region
+  - date_range
+  outputs:
+  - environmental_evidence
+  - territory_index
+  evidencia: Arquivo 829 linhas com parse_inpe, parse_gbif, parse_eonet, parse_ibge, parse_open_meteo
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Algumas fontes SSL quebradas, funciona via redirect
+  classe: A
+- id: lr-quality-layer
+  name: Quality Layer (extrair qualidade, normalizar, hash)
+  type: methodology
+  domain: evidence
+  problem_types:
+  - quality-control
+  - normalizacao-dados
+  - provenance
+  tools_used:
+  - terminal
+  scripts:
+  - Lux-Radar/scripts/quality_layer.py
+  repo: viniburilux/Lux-Radar
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/quality_layer.py
+  inputs:
+  - raw_record
+  outputs:
+  - quality_state
+  - content_hash
+  - norm_url
+  - clean_text
+  evidencia: 'quality_layer.py: 440 linhas com SHA-256 + ISO 8601 + NFKD'
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: null
+  classe: A
+- id: lr-build-release
+  name: Build Release (juntar sinais em release versionada)
+  type: data-pipeline
+  domain: opportunity-intelligence
+  problem_types:
+  - release-versionada
+  - consolidar-fontes
+  - oportunidades-publicas
+  tools_used:
+  - terminal
+  scripts:
+  - Lux-Radar/scripts/build_release.py
+  repo: viniburilux/Lux-Radar
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Radar/scripts/build_release.py
+  inputs:
+  - sources[]
+  - config
+  - evidence[]
+  outputs:
+  - Release JSON com opportunities + signals + claim_map
+  evidencia: 'build_release.py: 770 linhas com decorate, claim_map, dedupe, merge'
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Requer config e sources definidos
+  classe: A
+- id: ll-pncp-bahia
+  name: Pipeline PNCP-Bahia Intelligence
+  type: data-pipeline
+  domain: transparencia-publica
+  problem_types:
+  - analise-estadual
+  - inteligencia-regional
+  tools_used:
+  - terminal
+  - web_extract
+  - write_file
+  scripts:
+  - Lux-Lab/pncp_bahia_intelligence/analyze_bahia.py
+  - Lux-Lab/pncp_bahia_intelligence/drilldown_bahia.py
+  - Lux-Lab/pncp_bahia_intelligence/thematic_queries.py
+  - Lux-Lab/pncp_bahia_intelligence/analyze_correntina_2026.py
+  - Lux-Lab/pncp_bahia_intelligence/collect_pncp_diario_evidence.py
+  repo: viniburilux/Lux-Lab
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Lab/pncp_bahia_intelligence/
+  inputs:
+  - municipality
+  - year
+  - thematic filter
+  outputs:
+  - analise estruturada
+  - cruzar com Querido Diario
+  evidencia: 6 scripts Python de producao + cruza PNCP com Querido Diario
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: proven
+  limitations: null
+  classe: A
+- id: ll-document-acquisition
+  name: Adquirir documentos (patentes, papers, PDFs)
+  type: data-acquisition
+  domain: research
+  problem_types:
+  - adquirir-paper
+  - patent-discovery
+  - pdf-extraction
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - Lux-Lab/document_acquisition_v0/
+  repo: viniburilux/Lux-Lab
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Lab/document_acquisition_v0/
+  inputs:
+  - document_id
+  - source
+  - type
+  outputs:
+  - document with status (FULL_TEXT_VERIFIED)
+  evidencia: 4 adapters validados + status policy com 7 estados
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: proven
+  limitations: null
+  classe: A
+- id: ll-sigmine
+  name: Pipeline territorial mineral (SIGMINE + AlphaEarth)
+  type: data-pipeline
+  domain: territorial
+  problem_types:
+  - mineracao
+  - analise-territorial
+  - embeddings-espaciais
+  tools_used:
+  - terminal
+  scripts:
+  - Lux-Lab/sigmine_mineral_retrieval/
+  repo: viniburilux/Lux-Lab
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Lab/sigmine_mineral_retrieval/
+  inputs:
+  - region
+  - mineral_type
+  - embedding_model
+  outputs:
+  - 20 candidatos
+  - UMAP clusters
+  evidencia: '7 blocos: SIGMINE query → AlphaEarth → UMAP → retrieval'
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Requer GPU/Earth Engine - bloqueado nesta VPS
+  classe: C
+- id: ll-asie-cycle
+  name: Ciclo adaptativo exploracao→reconstrucao→comparacao
+  type: methodology
+  domain: research
+  problem_types:
+  - replicar-metodo
+  - comparar-implementacoes
+  tools_used:
+  - terminal
+  scripts:
+  - Lux-Lab/asie_experiment_v0/
+  repo: viniburilux/Lux-Lab
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Lab/asie_experiment_v0/
+  inputs:
+  - target_system
+  - method_to_replicate
+  outputs:
+  - '3 camadas: exploracao, reconstrucao, comparacao'
+  evidencia: 'Documento: "Cadeia adaptativa observada"'
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: proven
+  limitations: null
+  classe: E
+- id: ll-domain-probes
+  name: Virgin Domain Probes (primeira investigação)
+  type: methodology
+  domain: research
+  problem_types:
+  - primeira-investigacao-dominio
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - Lux-Lab/virgin_domain_probes/ (23 scripts)
+  repo: viniburilux/Lux-Lab
+  paths:
+  - /home/vinicius/luxverso-archive/Lux-Lab/virgin_domain_probes/
+  inputs:
+  - domain_name
+  - first_questions
+  outputs:
+  - structured probes com JSON
+  evidencia: 23 scripts Python + 146 JSONs, 32MB de artefatos
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: null
+  classe: E
+- id: h-delegate-task
+  name: delegate_task (subagentes paralelos)
+  type: orchestration
+  domain: meta
+  problem_types:
+  - paralelizar-investigacao
+  - multi-llm
+  - orchestration
+  tools_used:
+  - delegate_task
+  scripts:
+  - tools/delegate_tool.py
+  repo: Hermes v0.19.0
+  paths:
+  - /usr/local/lib/python3.11/dist-packages/tools/delegate_tool.py
+  inputs:
+  - goal
+  - context
+  - role
+  outputs:
+  - child agent summary
+  - async completion event
+  evidencia: Implementação 3700+ linhas com role, max_spawn_depth, batch mode
+  reused_count: 1
+  last_used: '2026-08-31'
+  status: ready
+  limitations: Child nao tem memoria persistente
+  classe: A
+- id: h-session-search
+  name: session_search (FTS5 sobre 1778 msgs)
+  type: memory-retrieval
+  domain: meta
+  problem_types:
+  - recuperar-contexto-antigo
+  - buscar-decisao-anterior
+  tools_used:
+  - session_search
+  scripts:
+  - state.db (SQLite + FTS5)
+  repo: Hermes v0.19.0
+  paths:
+  - /home/vinicius/.hermes/state.db
+  inputs:
+  - query
+  - session_id
+  - around_message_id
+  outputs:
+  - matches com contexto
+  evidencia: 1778 mensagens indexadas, FTS5 funcionando, subutilizado
+  reused_count: 0
+  last_used: '2026-08-30'
+  status: ready
+  limitations: Por keyword, nao semantica
+  classe: A
+- id: h-github-search
+  name: GitHub API (repos publicos + privados)
+  type: integration
+  domain: meta
+  problem_types:
+  - descobrir-repo
+  - listar-arquivo
+  - criar-issue
+  tools_used:
+  - terminal
+  - web_extract
+  scripts: []
+  repo: viniburilux/LuxVerso ecosystem
+  paths: []
+  inputs:
+  - query
+  - owner
+  - type
+  outputs:
+  - JSON list
+  evidencia: Token GITHUB_TOKEN configurado, 35 repos descobertos nesta missao
+  reused_count: 1
+  last_used: '2026-08-31'
+  status: ready
+  limitations: Sem MCP GitHub ativo
+  classe: A
+- id: h-google-drive
+  name: Google Drive (compartilhado viniburilux@gmail.com)
+  type: integration
+  domain: meta
+  problem_types:
+  - acesso-dados-pesados
+  - compartilhar-arquivos
+  tools_used:
+  - terminal
+  - web_extract
+  scripts: []
+  repo: viniburilux/LuxVerso ecosystem
+  paths:
+  - /home/vinicius/.hermes/google_oauth/
+  inputs:
+  - folder_id
+  - file_id
+  outputs:
+  - file content
+  evidencia: Token configurado, refresh funcionando, usado na pasta CGU
+  reused_count: 1
+  last_used: '2026-08-31'
+  status: ready
+  limitations: Token expira rapido, precisa refresh
+  classe: A
+- id: cgu-cross-data-fires
+  name: Cross-data PNCP x NASA FIRMS (focos de queimada)
+  type: analysis
+  domain: transparencia-publica
+  problem_types:
+  - cgu-concurso
+  - analise-ambiental
+  - resposta-publica
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - cgu-reuso-2026/scripts/
+  repo: viniburilux/cgu-reuso-2026
+  paths:
+  - /home/vinicius/cgu-reuso-2026/
+  inputs:
+  - uf
+  - data_range
+  - radius_km
+  outputs:
+  - GeoJSON features com distance_to_fire
+  evidencia: 1417 focos FIRMS cruzados com 350 editais PNCP - Catu BA a 3.99km
+  reused_count: 0
+  last_used: '2026-08-31'
+  status: proven
+  limitations: null
+  classe: A
+- id: cgu-cnes-cross
+  name: Cross-data CNES (hospitais) x FIRMS
+  type: analysis
+  domain: saude-publica
+  problem_types:
+  - cgu-concurso
+  - saude-em-area-risco
+  tools_used:
+  - terminal
+  - web_extract
+  scripts:
+  - cgu-reuso-2026/scripts/
+  repo: viniburilux/cgu-reuso-2026
+  paths:
+  - /home/vinicius/cgu-reuso-2026/
+  inputs:
+  - uf
+  - radius_km
+  outputs:
+  - hospitais + distancia + focos
+  evidencia: 28 hospitais BA cruzados, 1 hospital a 3.99km de fogo ativo
+  reused_count: 0
+  last_used: '2026-08-31'
+  status: experimental
+  limitations: API CNES limita 20 results
+  classe: A
+- id: sk-osint
+  name: OSINT Investigation (public records)
+  type: skill
+  domain: research
+  problem_types:
+  - investigar-empresa
+  - sanctions-screen
+  - corporate-due-diligence
+  tools_used:
+  - terminal
+  - web_extract
+  scripts: []
+  repo: NousResearch/hermes-agent
+  paths:
+  - /home/vinicius/.hermes/skills/osint-investigation/
+  inputs:
+  - entity_name
+  - jurisdiction
+  outputs:
+  - evidence chain com confidence
+  evidencia: SKILL.md 11.6KB - SEC, USAspending, OFAC, ICIJ, OpenCorporates
+  reused_count: 0
+  last_used: '2026-08-31'
+  status: ready
+  limitations: Fontes USA-only por padrao
+  classe: A
+- id: sk-subagent-dev
+  name: Subagent-Driven Development (2-stage review)
+  type: skill
+  domain: meta
+  problem_types:
+  - executar-plano
+  - paralelizar-implementacao
+  tools_used:
+  - delegate_task
+  - todo
+  scripts: []
+  repo: NousResearch/hermes-agent
+  paths:
+  - /home/vinicius/.hermes/skills/subagent-driven-development/
+  inputs:
+  - plan
+  - tasks[]
+  outputs:
+  - implementation + 2-stage review
+  evidencia: SKILL.md 10.7KB - "Fresh subagent per task"
+  reused_count: 0
+  last_used: '2026-08-31'
+  status: ready
+  limitations: null
+  classe: A
+- id: sk-watchers
+  name: Watchers (RSS/JSON/GitHub polling)
+  type: skill
+  domain: automation
+  problem_types:
+  - monitorar-fonte
+  - notificar-mudanca
+  tools_used:
+  - terminal
+  - cronjob
+  scripts: []
+  repo: NousResearch/hermes-agent
+  paths:
+  - /home/vinicius/.hermes/skills/watchers/
+  inputs:
+  - source_url
+  - interval
+  outputs:
+  - new items
+  evidencia: SKILL.md 4.5KB - 3 scripts com watermark dedup
+  reused_count: 0
+  last_used: '2026-08-31'
+  status: ready
+  limitations: null
+  classe: A

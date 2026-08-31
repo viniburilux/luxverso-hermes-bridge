@@ -1,0 +1,254 @@
+{
+  "tracefoundry": {
+    "structure": {
+      "root": "/home/vinicius/luxverso-archive/TraceFoundry/",
+      "dirs_3_levels": {
+        "src": ["src/oi_discovery/", "src/oi_discovery/adapters/"],
+        "schemas": ["schemas/"],
+        "tests": ["tests/", "tests/fixtures/"],
+        "scripts": ["scripts/"],
+        "docs": ["docs/", "docs/archaeology/"],
+        "examples": ["examples/", "examples/research_move_v0/", "examples/claim_audit_v0/"],
+        "benchmark": ["benchmark/", "benchmark/runs_v0/"],
+        "assets": ["assets/"],
+        ".github": [".github/"]
+      }
+    },
+    "schemas": [
+      {
+        "file": "discovery_manifest.schema.json",
+        "title": "OI Discovery manifest",
+        "desc": "Schema para resultado de discovery versionado (query, dataset, decisions, selected_asset_ids, provenance)",
+        "lines": 105,
+        "reusable": true
+      },
+      {
+        "file": "query_dsl.schema.json",
+        "title": "OI Discovery Query DSL",
+        "desc": "Schema da linguagem de consulta (sources, dataset_id, domain, keywords, modalities, formats, geography, date_range, license, max_assets)",
+        "lines": 32,
+        "reusable": true
+      },
+      {
+        "file": "investigation_state.schema.json",
+        "title": "TraceFoundry Investigation State",
+        "desc": "Estado de investigacao versionado com evidence references, claims, gaps, decision, next_move_id",
+        "lines": 74,
+        "reusable": true
+      },
+      {
+        "file": "research_move.schema.json",
+        "title": "TraceFoundry Research Move",
+        "desc": "Proximo passo de pesquisa com action_type, rationale, evidence_ids, gap_ids, stop_criteria, status",
+        "lines": 39,
+        "reusable": true
+      },
+      {
+        "file": "claim_audit.schema.json",
+        "title": "TraceFoundry Claim Audit Registry",
+        "desc": "Registry de claims com statement, status (observed/inferred/hypothesis/...), evidence_ids, source_uris",
+        "lines": 39,
+        "reusable": true
+      },
+      {
+        "file": "discovery_memory_link.schema.json",
+        "title": "OI Discovery to LuxMemory link",
+        "desc": "Ponte entre manifesto OI Discovery e LuxMemory: link_id, source, observations (asset_id, claim, evidence), interpretation, luxmemory ref",
+        "lines": 69,
+        "reusable": true
+      }
+    ],
+    "modules": {
+      "name": "oi_discovery (pkg)",
+      "pyproject": "name=oi-discovery, version=0.1.0, Python>=3.10, dep=requests>=2.31",
+      "entry_points": {"cli": "oi_discovery.cli:main"},
+      "adapter_protocol": "DiscoveryAdapter (Protocol): source_name + discover(query) -> DatasetRecord",
+      "adapters": [
+        {"name": "DandiAdapter", "source": "dandi", "api": "https://api.dandiarchive.org/api/"},
+        {"name": "OpenAlexAdapter", "source": "openalex", "api": "https://api.openalex.org/"},
+        {"name": "PatentAdapter", "source": "patentsview", "api": "https://search.patentsview.org/api/v1", "requires_key": true},
+        {"name": "ZenodoAdapter", "source": "zenodo", "api": "https://zenodo.org/api/"}
+      ]
+    },
+    "central_files": {
+      "__init__.py": "Exports: SCHEMA_VERSION, AssetRecord, DatasetRecord, DiscoveryQuery, DiscoveryResult, EligibilityDecision, Claim, EvidenceGap, EvidenceReference, InvestigationState, ResearchMove, build_link, build_result, write_manifest",
+      "models.py": "Data contracts: DiscoveryQuery, AssetRecord, DatasetRecord, EligibilityDecision, DiscoveryResult (dataclasses frozen)",
+      "investigation.py": "Classes: EvidenceReference, Claim, EvidenceGap, InvestigationState, ResearchMove + fn build_investigation_state()",
+      "bridge.py": "Key functions: stable_hash(), asset_quote(), normalize_manifest(), build_link() — ponte para LuxMemory",
+      "manifest.py": "Functions: build_result(), manifest_payload(), write_manifest() — geracao de manifestos",
+      "query.py": "Class ParsedQuery + fn parse_query() — parser do DSL de consulta",
+      "selection.py": "Functions: decide_asset(), rank_assets() — selecao explicavel por criterios (formato, tamanho, modalidade)",
+      "evaluation.py": "Functions: assess_manifest(), render_assessment() — avaliacao de suficiencia de evidencia",
+      "registry.py": "Class DiscoveryRun, DiscoveryRegistry — registro append-only em JSONL",
+      "cli.py": "CLI entry: main() — discovery via DandiAdapter"
+    },
+    "tests": [
+      {"file": "tests/test_core.py", "importance": "HIGH", "desc": "Testes offline: selection explainable + manifest metadata-only"},
+      {"file": "tests/run_offline_tests.py", "importance": "HIGH", "desc": "Regressao: patent adapter offline, selection, manifest, bridge, legacy manifest, schema"},
+      {"file": "tests/run_live_metadata_tests.py", "importance": "HIGH", "desc": "Teste vivo DANDI: descobre assets sem download"},
+      {"file": "tests/run_cross_domain_live_tests.py", "importance": "HIGH", "desc": "Teste cross-domain: DANDI + OpenAlex + Zenodo + PatentsView com mesmo contrato"},
+      {"file": "tests/run_research_move_tests.py", "importance": "MEDIUM", "desc": "Testes de Research Move e Investigation State"},
+      {"file": "tests/run_dsl_registry_tests.py", "importance": "MEDIUM", "desc": "Testes de Query DSL e DiscoveryRegistry"},
+      {"file": "tests/run_claim_audit_tests.py", "importance": "MEDIUM", "desc": "Testes de Claim Audit Registry"},
+      {"file": "tests/run_live_metadata_tests.py", "importance": "HIGH", "desc": "Teste metadata-only DANDI"},
+      {"file": "tests/validate_benchmark.py", "importance": "MEDIUM", "desc": "Validacao dos resultados do benchmark v0"},
+      {"fixture": "tests/fixtures/manifest_minimal.json", "desc": "Fixture minima de manifesto Zenodo para testes"}
+    ],
+    "scripts": [
+      "scripts/oi_discover.py - CLI metadata-only discovery (wraps src/oi_discovery/cli.py)",
+      "scripts/link_manifest_to_luxmemory.py - Cria link OI Discovery -> LuxMemory",
+      "scripts/run_benchmark_v0.py - Executa benchmark v0 contra todos os adapters",
+      "scripts/show_research_move.py - Renderiza fixture de Research Move como card"
+    ],
+    "integration_refs": {
+      "hermes": "NENHUMA referencia encontrada em nenhum arquivo .py ou .md",
+      "bridge": "50 matches. Core module: src/oi_discovery/bridge.py (build_link, normalize_manifest). Usado por todos os scripts e tests. Docs: LUXMEMORY_OI_INTEGRATION.md, ARCHITECTURE.md, TEST_MATRIX.md",
+      "LuxMemory": "50 matches. Schema discovery_memory_link.schema.json. Dedicado doc LUXMEMORY_OI_INTEGRATION.md define ponte entre OI Discovery e LuxMemory",
+      "integration": "37 matches (maioria em benchmark data). 1 match relevant em docs/PUBLICATION_PIPELINE.md ('safe adapter integration recipes')",
+      "api": "Referencias a APIs externas nos adapters (DANDI API, OpenAlex API, Zenodo API, PatentsView API). Nenhuma referencia a Hermes API"
+    }
+  },
+  "lux_radar": {
+    "structure": {
+      "root": "/home/vinicius/luxverso-archive/Lux-Radar/",
+      "dirs_3_levels": {
+        "scripts": ["scripts/"],
+        "src": ["src/lux_radar/"],
+        "tests": ["tests/"],
+        "docs": ["docs/", "docs/decisions/"],
+        "schemas": ["schemas/"],
+        "config": ["config/"],
+        "data": ["data/"],
+        "fixtures": ["fixtures/", "fixtures/evidence/", "fixtures/normalized/", "fixtures/observations/", "fixtures/opportunities/", "fixtures/releases/", "fixtures/signals/", "fixtures/temporal/"],
+        "site": ["site/", "site/data/"],
+        "experiments": ["experiments/", "experiments/001-signal-to-opportunity/"],
+        ".github": [".github/", ".github/workflows/", ".github/ISSUE_TEMPLATE/"]
+      },
+      "src_package": {
+        "status": "EMPTY — src/lux_radar/ contem apenas .gitkeep. TODO o codigo vivo esta em scripts/"
+      }
+    },
+    "scripts": [
+      {
+        "file": "scripts/wave2_collectors.py",
+        "size_lines": 313,
+        "first_50_lines_resumo": "Collectors para 9 fontes Wave 2: funbio-chamadas, fundo-casa-editais, fundacao-boticario-editais, bnb-fundeci, sudene-editais, embratur-editais, prosas-editais, capta-editais, capitaai-meio-ambiente. Parseadores HTML/PDF com identificacao de editais, datas, valores.",
+        "reusable": "PODE IMPORTAR DIRETAMENTE — importacao via importlib (ex: tests/test_wave2_collectors.py)"
+      },
+      {
+        "file": "scripts/environmental_signals.py",
+        "size_lines": 828,
+        "first_50_lines_resumo": "Motor de sinais ambientais para 5 fontes: inpe-queimadas, gbif-occurrences, nasa-eonet, ibge-localidades-api, open-meteo. Funcoes: parse_inpe(), parse_gbif(), parse_eonet(), parse_ibge(), parse_open_meteo(), entity_diff(), fetch_environmental_source(), environmental_evidence(), build_environmental_signal_views()",
+        "reusable": "PODE IMPORTAR DIRETAMENTE"
+      },
+      {
+        "file": "scripts/quality_layer.py",
+        "size_lines": 439,
+        "first_50_lines_resumo": "Camada de qualidade: extracao de deadlines (parse_dates()), estado de oportunidade (quality_state()), extracao de valores (extract_amount()), extracao de PDFs, verificacao de fontes curator vs primary. User-Agent: Lux-Radar-Quality-Layer/0.2",
+        "reusable": "PODE IMPORTAR DIRETAMENTE"
+      },
+      {
+        "file": "scripts/build_release.py",
+        "size_lines": 769,
+        "first_50_lines_resumo": "Orquestrador principal de release: importa WAVE2_COLLECTOR_IDS, ENVIRONMENTAL_SOURCE_IDS, funcoes de quality_layer, wave2_collectors, environmental_signals. Funcoes: fetch_source(), classify_experience(), dedupe(), merge_history(), build_signal_views(), build_release()",
+        "reusable": "PODE IMPORTAR DIRETAMENTE — e o entry point do pipeline"
+      }
+    ],
+    "tests": [
+      {"file": "tests/test_builder.py", "importance": "HIGH", "desc": "123 lines. Testes de dedup, classificacao de experiencia, merge de historico, signal views, source profile mapping, source change detection"},
+      {"file": "tests/test_wave2_collectors.py", "importance": "HIGH", "desc": "63 lines. Testes de parseadores: funbio, bnb, embratur, capta"},
+      {"file": "tests/test_environmental_signals.py", "importance": "HIGH", "desc": "130 lines. Testes de entity_diff, parse_inpe (CSV), parse_gbif, parse_eonet, composicoes ambientais, source failure sem inferencia de remocao"},
+      {"file": "tests/test_quality_layer.py", "importance": "HIGH", "desc": "68 lines. Testes de extracao de deadlines (Portugues), quality_state, extract_amount BRL, source_quality"},
+      {"file": "tests/validate_fixtures.py", "importance": "HIGH", "desc": "64 lines. Validacao de todas as fixtures contra schemas JSON (observations, evidence, normalized, opportunities, releases, signals) + validacao de product views"}
+    ],
+    "docs": [
+      {"file": "README.md", "title": "README", "desc": "Documentacao principal do Lux Radar"},
+      {"file": "docs/ARCHITECTURE.md", "title": "Arquitetura inicial", "desc": "171 lines. Camadas: Source Registry -> Collector -> SourceObservation -> Evidence -> Release Manifest -> Normalization -> Canonical Opportunity -> Context/Delivery. Compatibilidade com TraceFoundry"},
+      {"file": "docs/TRACEFOUNDRY_COMPATIBILITY.md", "title": "Compatibilidade Lux Radar × TraceFoundry", "desc": "72 lines. MAPEAMENTO COMPLETO de conceitos entre Lux Radar e TraceFoundry. Reuso/ADAPT para cada conceito (Source, Observation, Evidence, Manifest, NormalizedRecord, ResearchMove, InvestigationState)"},
+      {"file": "docs/SOURCE_INVENTORY.md", "title": "Inventario inicial de fontes", "desc": "93 lines. 20 fontes catalogadas: MMA/FNMA, MMA/Fundo Clima, MCTI, Finep, BNDES/Floresta Viva, FAPESB, CNPq, CAPES, Fundo Amazonia, Embrapii, Petrobras Socioambiental, Sebrae, RNP, Transferegov, EU Funding, CINEA/LIFE, Simpler.Grants.gov, NSF, UNESCO, Banco Mundial"},
+      {"file": "docs/signal-engine-v1.md", "title": "Sustainability Signal Engine v1", "desc": "74 lines. Experimento com 7 fontes (FUNBIO, Fundacao Boticario, Prosas, CNPq, PNCP, IBGE, MapBiomas). Release global: 223 observacoes, 217 evidencias, 813 normalizados, 581 canonicos, 15 oportunidades atuais, 615 sinais"},
+      {"file": "docs/environmental-signal-engine-v1.md", "title": "Environmental Signal Engine v1", "desc": "33 lines. 5 fontes ambientais: INPE Queimadas (FIRE_ACTIVITY), GBIF (BIODIVERSITY_OCCURRENCE), NASA EONET (NATURAL_EVENT), IBGE Localidades (TERRITORIAL_CONTEXT), Open-Meteo (CLIMATE_CONDITION)"},
+      {"file": "docs/PNCP_INTERFACE.md", "title": "Interface com pncp-data-pipeline", "desc": "82 lines. Definicao de como Lux Radar consome dados do pipeline PNCP via releases versionados"},
+      {"file": "docs/PRODUCT_THESIS.md", "title": "Tese de produto", "desc": "124 lines. Problema, tese central: maquina de aquisicao, observacao, evidencia e inteligencia de oportunidades"},
+      {"file": "docs/ROADMAP.md", "title": "Roadmap", "desc": "108 lines. Fases: 0 (territorio), 1 (20 fontes), 2 (3 perfis: Transferegov, FAPESB, BNDES/Floresta Viva)"},
+      {"file": "docs/GOVERNANCE.md", "title": "Governance", "desc": "Nao lido integralmente"},
+      {"file": "docs/PRODUCT_THESIS.md", "title": "Product Thesis", "desc": "Nao lido integralmente"},
+      {"file": "docs/EXECUTION_REPORT_2026-08-25.md", "title": "Execution Report", "desc": "Nao lido integralmente"},
+      {"file": "docs/ui-verification-2026-08-26.md", "title": "UI Verification", "desc": "Nao lido integralmente"},
+      {"file": "docs/JHOEL_TASKS.md", "title": "Jhoel Tasks", "desc": "Nao lido integralmente"},
+      {"file": "docs/research-2026-08-25.md", "title": "Research 2026-08-25", "desc": "Nao lido integralmente"},
+      {"file": "docs/decisions/0001-public-lux-radar-boundary.md", "title": "ADR 0001 — Public boundary", "desc": "Decisao arquitetonica"},
+      {"file": "docs/decisions/0002-observation-and-acquisition-first.md", "title": "ADR 0002 — Observation first", "desc": "Decisao arquitetonica"}
+    ],
+    "sources": {
+      "total_no_registry": 34,
+      "wave2_collectors_9": [
+        {"id": "funbio-chamadas", "collector": "funbio-chamadas", "organization": "FUNBIO"},
+        {"id": "fundo-casa-editais", "collector": "fundo-casa-editais", "organization": "Fundo Casa Socioambiental"},
+        {"id": "fundacao-boticario-editais", "collector": "fundacao-boticario-editais", "organization": "Fundacao Grupo Boticario"},
+        {"id": "bnb-fundeci", "collector": "bnb-fundeci", "organization": "Banco do Nordeste"},
+        {"id": "sudene-editais", "collector": "sudene-editais", "organization": "SUDENE"},
+        {"id": "embratur-editais", "collector": "embratur-editais", "organization": "Embratur"},
+        {"id": "prosas-editais", "collector": "prosas-editais", "organization": "Prosas"},
+        {"id": "capta-editais", "collector": "capta-editais", "organization": "Capta/ISPN"},
+        {"id": "capitaai-meio-ambiente", "collector": "capitaai-meio-ambiente", "organization": "Capitaai"}
+      ],
+      "environmental_sources_5": [
+        {"id": "inpe-queimadas", "type": "FIRE_ACTIVITY", "access": "directory_csv"},
+        {"id": "gbif-occurrences", "type": "BIODIVERSITY_OCCURRENCE", "access": "rest_api"},
+        {"id": "nasa-eonet", "type": "NATURAL_EVENT", "access": "rest_api"},
+        {"id": "ibge-localidades-api", "type": "TERRITORIAL_CONTEXT", "access": "rest_api"},
+        {"id": "open-meteo", "type": "CLIMATE_CONDITION", "access": "rest_api"}
+      ],
+      "total_wave2_plus_environmental": 14
+    },
+    "releases": {
+      "exists": true,
+      "dir": "fixtures/releases/2026-08-25-pilot-safe/",
+      "data_files": [
+        "data/opportunities.json",
+        "data/current-opportunities.json",
+        "data/signals-history.json",
+        "data/opportunities.csv",
+        "data/normalized.json",
+        "data/signals.json",
+        "data/release-manifest.json",
+        "data/observations.json",
+        "data/evidence.json"
+      ],
+      "site_data": "site/data/ contem copia dos mesmos dados para deploy GitHub Pages",
+      "ci": ".github/workflows/weekly-release.yml — workflow semanal de coleta e deploy"
+    },
+    "schemas": [
+      {"file": "signal.schema.json", "title": "Lux Radar Signal", "reusable": true},
+      {"file": "opportunity.schema.json", "title": "Lux Radar Canonical Opportunity", "reusable": true, "lines": 294},
+      {"file": "source-observation.schema.json", "title": "Lux Radar Source Observation", "reusable": true, "lines": 121},
+      {"file": "normalized-record.schema.json", "title": "Lux Radar Normalized Record", "reusable": true, "lines": 41},
+      {"file": "evidence.schema.json", "title": "Lux Radar Evidence", "reusable": true, "lines": 89},
+      {"file": "derived-signal.schema.json", "title": "Lux Radar Derived Signal", "reusable": true, "lines": 53},
+      {"file": "release-manifest.schema.json", "title": "Lux Radar Release Manifest", "reusable": true, "lines": 195}
+    ],
+    "reutilizavel_para_hermes": {
+      "importar_diretamente": [
+        "scripts/wave2_collectors.py (9 collectors funcionando)",
+        "scripts/environmental_signals.py (5 sources ambientais)",
+        "scripts/quality_layer.py (quality engine para oportunidades)",
+        "scripts/build_release.py (orquestrador completo de pipeline)",
+        "config/sources.json (34 fontes catalogadas com metadados completos)"
+      ],
+      "schemas_json": [
+        "todos os 7 schemas em schemas/ sao contratos formais JSON Schema draft 2020-12"
+      ],
+      "dados_publicados": [
+        "data/opportunities.json (oportunidades atuais)",
+        "data/signals.json (sinais derivados)",
+        "data/release-manifest.json (manifestos de release)",
+        "data/observations.json (observacoes de fonte)"
+      ],
+      "ponte_tracefoundry": {
+        "documento": "docs/TRACEFOUNDRY_COMPATIBIBILITY.md",
+        "decidido": "REUSE + ADAPT entre conceitos dos dois repos. Lux Radar produz observacoes; TraceFoundry fornece epistemologia de discovery, selecao, evidencia e investigacao"
+      }
+    }
+  }
+}

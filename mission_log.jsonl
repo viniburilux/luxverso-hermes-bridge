@@ -1,0 +1,2 @@
+{"timestamp": "2026-08-31T04:33:59.093871+00:00", "category": "mission_start", "mission": "luxverso-arqueologia", "operator": "hermes-v0.19.0", "imperador": "viniburilux"}
+{"timestamp": "2026-08-31T04:38:20.218900+00:00", "category": "implementation", "artefato": "~/.hermes/capabilities/registry.yaml", "conteudo": "21 capabilities documentadas com EVidencia real", "classes": {"A": 18, "C": 1, "E": 2}, "tipos": {"methodology": 5, "integration": 3, "data-acquisition": 3, "data-pipeline": 3, "orchestration": 1, "memory-retrieval": 1, "analysis": 2, "skill": 3}}

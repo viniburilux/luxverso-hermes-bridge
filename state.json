@@ -1,0 +1,52 @@
+{
+  "mission": "luxverso-arqueologia",
+  "finalizado": "2026-08-31T04:57:33.180927+00:00",
+  "duration_minutes": 90,
+  "artefatos": {
+    "registry": "~/.hermes/capabilities/registry.yaml",
+    "playbooks": [
+      "~/.hermes/playbooks/investigate-new-domain.md",
+      "~/.hermes/playbooks/repository-archaeology.md",
+      "~/.hermes/playbooks/data-source-discovery.md"
+    ],
+    "skills_proprias": [
+      "~/.hermes/skills/opportunity-router/SKILL.md"
+    ],
+    "skills_oficiais_adicionadas": [
+      "~/.hermes/skills/osint-investigation/",
+      "~/.hermes/skills/subagent-driven-development/",
+      "~/.hermes/skills/watchers/"
+    ],
+    "integracoes": [
+      "~/.hermes/integrations/luxmemory_client.py",
+      "~/.hermes/integrations/retrieve_patched.py",
+      "luxverso-archive/LuxMemory/src/app_local.py"
+    ],
+    "logs": [
+      "~/.hermes/mission_log/mission_log.jsonl",
+      "~/.hermes/mission_log/tests.jsonl",
+      "~/.hermes/mission_log/MISSION_REPORT.md"
+    ]
+  },
+  "metricas": {
+    "repos_descobertos": 35,
+    "repos_locais_analisados": 12,
+    "capabilities_catalogadas": 21,
+    "capabilities_luxmemory_integradas": 25,
+    "skills_instaladas_total": 5,
+    "playbooks_criados": 3,
+    "subagentes_usados": 3,
+    "subagentes_completaram": 2,
+    "testes_executados": 3,
+    "testes_passaram": 3
+  },
+  "servicos_ativos": {
+    "luxmemory_api": "http://127.0.0.1:8787",
+    "endpoints": [
+      "GET /api/capabilities",
+      "GET /api/search (5 modos)",
+      "GET /api/skills",
+      "GET /api/resume"
+    ]
+  }
+}
