@@ -11,11 +11,11 @@ from .investigate import (
     # classe principal
     InvestigationCycle,
     # ciclo de vida
-    investigate, save_cycle, load_state, op_id,
+    investigate, save_cycle, load_state,
     # recuperacao (R1)
     find_capabilities, find_playbook,
-    # operadores AOM
-    AOM_OPERATORS, AOM_OPERATIONS, apply_operator,
+    # acao adaptativa
+    apply_action,
     # registros
     add_evidence, add_claim, add_gap, discard_path, queue_next, set_decision,
     # bridge

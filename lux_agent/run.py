@@ -3,27 +3,39 @@
 Lux Investigation Agent — Entry point CLI.
 
 Uso:
-  python3 run.py "tem um edital sobre X?"
-  python3 run.py "investigue oportunidade Y" --resume
+  python3 run.py "oportunidade aqui"
+  python3 run.py "oportunidade" --resume
   python3 run.py --render <opportunity_id>
+  python3 run.py --list
 
-O Hermes usa este script quando o usuario faz uma pergunta investigativa.
-O agente reusa TraceFoundry, LuxMemory API, Capability Registry, playbooks.
+Configuracao via variaveis de ambiente:
+  HERMES_HOME         - raiz do Hermes (default: diretorio deste script)
+  TRACE_FOUNDRY_SRC   - path para TraceFoundry/src (opcional, modo degradado se faltar)
+  HERMES_INTEGRATIONS - path para integracoes Hermes (opcional)
+  LUX_AGENT_ROOT      - raiz do agente (default: <HERMES_HOME>/lux_agent)
 """
 import sys
 import os
-import argparse
 from pathlib import Path
 
-# Adiciona o proprio diretorio ao path
-sys.path.insert(0, str(Path(__file__).parent))
-sys.path.insert(0, '/home/vinicius/.hermes/integrations')
-sys.path.insert(0, '/home/vinicius/luxverso-archive/TraceFoundry/src')
+# Paths via env var (sem hardcode de estrutura local)
+HERMES_HOME = Path(os.environ.get('HERMES_HOME', str(Path(__file__).parent.parent)))
+if str(HERMES_HOME) not in sys.path:
+    sys.path.insert(0, str(HERMES_HOME))
+
+_int = os.environ.get('HERMES_INTEGRATIONS')
+if _int:
+    sys.path.insert(0, _int)
+
+_tf = os.environ.get('TRACE_FOUNDRY_SRC')
+if _tf:
+    sys.path.insert(0, _tf)
 
 from lux_agent import investigate, save_cycle, render_report
 
 
 def main():
+    import argparse
     p = argparse.ArgumentParser(description='Lux Investigation Agent')
     p.add_argument('opportunity', nargs='?', help='Descricao da oportunidade (opcional se --list)')
     p.add_argument('--resume', action='store_true', help='Carregar estado anterior')
@@ -32,8 +44,8 @@ def main():
     args = p.parse_args()
 
     if args.list:
-        base = Path('/home/vinicius/.hermes/lux_agent')
-        opps = sorted([d for d in base.iterdir() if d.is_dir() and not d.name.startswith('.')])
+        from lux_agent import AGENT_ROOT
+        opps = sorted([d for d in AGENT_ROOT.iterdir() if d.is_dir() and not d.name.startswith('.')])
         if not opps:
             print('(nenhuma oportunidade)')
             return
@@ -43,7 +55,7 @@ def main():
         return
 
     if args.render:
-        from lux_agent import load_state, render_report
+        from lux_agent import load_state
         c = load_state(args.render)
         if c is None:
             print(f"Oportunidade {args.render} nao encontrada")
@@ -56,18 +68,18 @@ def main():
         sys.exit(1)
 
     c = investigate(args.opportunity, auto_resume=args.resume)
-    print(f"📋 InvestigationCycle criada")
+    print(f"InvestigationCycle criada")
     print(f"  opportunity_id: {c.opportunity_id}")
     print(f"  cycle_n: {c.cycle_n}")
     print(f"  question: {c.question}")
     print(f"  path: lux_agent/{c.opportunity_id}/cycles/cycle_{c.cycle_n:03d}.json")
     print()
-    print(f"Próximos passos para o Hermes:")
-    print(f"  1. R1: buscar capacidades e experiencias (find_capabilities, find_playbook)")
-    print(f"  2. R2: executar investigacao (search_files, web_search, delegate_task)")
-    print(f"  3. S: extrair sinais (add_evidence, add_claim, add_gap, discard_path)")
-    print(f"  4. P': decidir (set_decision, queue_next)")
-    print(f"  5. save_cycle(c) para persistir")
+    print("Proximos passos para o Hermes:")
+    print("  1. R1: buscar capacidades (find_capabilities, find_playbook)")
+    print("  2. R2: executar investigacao (search_files, web_search, delegate_task)")
+    print("  3. S: extrair sinais (add_evidence, add_claim, add_gap, discard_path)")
+    print("  4. P': decidir (set_decision, queue_next)")
+    print("  5. save_cycle(c) para persistir")
 
 
 if __name__ == '__main__':
